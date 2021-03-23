@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "saqi-f0a67"
+  },
+  "targets": {
+    "saqi-f0a67": {
+      "hosting": {
+        "saqi-payment": [
+          "saqi-payment"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <title>Saqi</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="shortcut icon" href="https://goSellJSLib.b-cdn.net/v1.4.1/imgs/tap-favicon.ico" />
+    <link href="https://goSellJSLib.b-cdn.net/v1.4.1/css/gosell.css" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      html {
+        display: table;
+        margin: auto;
+      }
+
+      body {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 6px solid #3498db;
+        width: 50px;
+        height: 50px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+      }
+
+      /* Safari */
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.4.1/js/gosell.js"></script>
+    <script type="text/javascript">
+      function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+          vars[key] = value;
+        });
+        return vars;
+      }
+    </script>
+  </head>
+  <body onload="goSell.openPaymentPage();">
+    <script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.4.1/js/gosell.js"></script>
+
+    <div id="root"></div>
+    <!-- <button id="openLightBox" onclick="goSell.openLightBox()">open goSell LightBox</button>
+    <button id="openPage" onclick="goSell.openPaymentPage()">open goSell Page</button> -->
+    <div class="loader"></div>
+    <script>
+      goSell.config({
+        containerID: "root",
+        gateway: {
+          publicKey: "pk_test_TOI5o4GMxiBZRlLzUXhAWkFq",
+          language: "ar",
+          contactInfo: true,
+          supportedCurrencies: ["SAR"],
+          supportedPaymentMethods: "all",
+          saveCardOption: false,
+          customerCards: true,
+          notifications: "standard",
+          callback: (response) => {
+            console.log("response", response);
+          },
+          onClose: () => {
+            console.log("onClose Event");
+          },
+          backgroundImg: {
+            url: 'https://firebasestorage.googleapis.com/v0/b/saqi-f0a67.appspot.com/o/images%2F5ac472f9-895f-4f96-adfc-263f80b8f5dc.jpg?alt=media&token=c479771c-6ed2-48de-8294-27143e3d0005',
+            opacity: '0.5'
+          },
+          labels: {
+            cardNumber: "Card Number",
+            expirationDate: "MM/YY",
+            cvv: "CVV",
+            cardHolder: "Name on Card",
+            actionButton: "Pay",
+          },
+          style: {
+            base: {
+              color: "#535353",
+              lineHeight: "18px",
+              fontFamily: "sans-serif",
+              fontSmoothing: "antialiased",
+              fontSize: "16px",
+              "::placeholder": {
+                color: "rgba(0, 0, 0, 0.26)",
+                fontSize: "15px",
+              },
+            },
+            invalid: {
+              color: "red",
+              iconColor: "#fa755a ",
+            },
+          },
+        },
+        customer: {
+          first_name: getUrlVars()["firstName"],
+          last_name: getUrlVars()["lastName"],
+          email: getUrlVars()["email"],
+          phone: {
+            country_code: "966",
+            number: getUrlVars()["phone"],
+          },
+        },
+        order: {
+          amount: getUrlVars()["price"],
+          currency: "SAR",
+        },
+        transaction: {
+          mode: "charge",
+          charge: {
+            saveCard: false,
+            threeDSecure: true,
+            reference: {
+              transaction: getUrlVars()["orderId"],
+              order: getUrlVars()["orderId"],
+            },
+            metadata: {},
+            receipt: {
+              email: false,
+              sms: true,
+            },
+            redirect: `https://saqi-f0a67.web.app/?linkingUri=${getUrlVars()["linkingUri"]}`,
+            // redirect: `http://localhost:3000/?linkingUri=${getUrlVars()["linkingUri"]}`,
+            post: null,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
